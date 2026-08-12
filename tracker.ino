@@ -7,7 +7,7 @@
 #define CAMERA_MODEL_AI_THINKER
 #include "camera_pins.h"
 
-// ------------------ Adjustable Settings -------------------
+// ------------------ Adjustable Settings ------------------
 #define BUTTON_PIN       0          // GPIO0 (built-in flash button)
 #define FRAME_WIDTH      160
 #define FRAME_HEIGHT     120

@@ -1,0 +1,35 @@
+name: Build ESP32 Binary
+
+on:
+  push:
+    paths:
+      - 'tracker.ino'
+      - 'camera_pins.h'
+      - '.github/workflows/compile.yml'
+  workflow_dispatch:  # يسمح بالتشغيل اليدوي من تبويب Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+
+      - name: Install ESP32 platform
+        run: |
+          arduino-cli config init
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
+
+      - name: Compile sketch
+        run: |
+          arduino-cli compile --fqbn esp32:esp32:esp32cam tracker.ino --output-dir build
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: build/*.bin
